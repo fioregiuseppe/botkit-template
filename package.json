@@ -3,7 +3,7 @@
     "version": "0.8.0",
     "main": "bot.js",
     "scripts": {
-        "start": "node bot.js && node slackbot.js"
+        "start": "node bot.js"
     },
     "keywords": [
         "webex-teams",
