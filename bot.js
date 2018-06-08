@@ -13,7 +13,7 @@ require('node-env-file')(__dirname + '/.env');
 
 // Fetch token from environement
 // [COMPAT] supports SPARK_TOKEN for backward compatibility
-var accessToken = process.env.ACCESS_TOKEN || process.env.SPARK_TOKEN 
+var accessToken = process.env.ACCESS_TOKEN || process.env.SPARK_TOKEN
 if (!accessToken) {
     console.log("Could not start as this bot requires a Webex Teams API access token.");
     console.log("Please invoke with an ACCESS_TOKEN environment variable");
@@ -61,8 +61,9 @@ var controller = Botkit.sparkbot({
     webhook_name: process.env.WEBHOOK_NAME || ('built with BotKit (' + env + ')')
 });
 
-var bot = controller.spawn({
-});
+controller.setTickDelay(300);
+
+var bot = controller.spawn({});
 
 
 //
@@ -70,8 +71,8 @@ var bot = controller.spawn({
 //
 
 var port = process.env.PORT || 3000;
-controller.setupWebserver(port, function (err, webserver) {
-    controller.createWebhookEndpoints(webserver, bot, function () {
+controller.setupWebserver(port, function(err, webserver) {
+    controller.createWebhookEndpoints(webserver, bot, function() {
         console.log("webhooks setup completed!");
     });
 
@@ -80,10 +81,10 @@ controller.setupWebserver(port, function (err, webserver) {
         "up_since": new Date(Date.now()).toGMTString(),
         "hostname": require('os').hostname() + ":" + port,
         "version": "v" + require("./package.json").version,
-        "bot": "unknown",   // loaded asynchronously
+        "bot": "unknown", // loaded asynchronously
         "botkit": "v" + bot.botkit.version()
     };
-    webserver.get(process.env.HEALTHCHECK_ROUTE, function (req, res) {
+    webserver.get(process.env.HEALTHCHECK_ROUTE, function(req, res) {
 
         // As the identity is load asynchronously from the Webex Teams access token, we need to check until it's fetched
         if (healthcheck.bot == "unknown") {
@@ -104,12 +105,11 @@ controller.setupWebserver(port, function (err, webserver) {
 //
 
 var normalizedPath = require("path").join(__dirname, "skills");
-require("fs").readdirSync(normalizedPath).forEach(function (file) {
+require("fs").readdirSync(normalizedPath).forEach(function(file) {
     try {
         require("./skills/" + file)(controller, bot);
         console.log("loaded skill: " + file);
-    }
-    catch (err) {
+    } catch (err) {
         if (err.code == "MODULE_NOT_FOUND") {
             if (file != "utils") {
                 console.log("could not load skill: " + file);
@@ -124,7 +124,7 @@ require("fs").readdirSync(normalizedPath).forEach(function (file) {
 //
 
 // Utility to add mentions if Bot is in a 'Group' space
-bot.appendMention = function (message, command) {
+bot.appendMention = function(message, command) {
 
     // if the message is a raw message (from a post message callback such as bot.say())
     if (message.roomType && (message.roomType == "group")) {
