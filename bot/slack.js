@@ -38,7 +38,7 @@ module.exports = {
         var healthcheck = {
             "up_since": new Date(Date.now()).toGMTString(),
             "hostname": require('os').hostname() + ":" + port,
-            "version": "v" + require("./package.json").version,
+            "version": "v" + require("../package.json").version,
             "bot": "unknown", // loaded asynchronously
             "botkit": "v" + bot.botkit.version()
         };
