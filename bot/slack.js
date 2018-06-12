@@ -1,6 +1,6 @@
 module.exports = {
     init: (Botkit, webServer) => {
-        require('node-env-file')(__dirname + '/.env');
+        require('node-env-file')(__dirname + '/../.env');
 
 
         // Fetch token from environement
