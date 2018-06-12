@@ -44,7 +44,7 @@ module.exports = {
             "botkit": "v" + bot.botkit.version()
         };
 
-        webServer.get('/', function(req, res) {
+        webServer.get('/slack', function(req, res) {
 
             // As the identity is load asynchronously from the Webex Teams access token, we need to check until it's fetched
             if (healthcheck.bot == "unknown") {
