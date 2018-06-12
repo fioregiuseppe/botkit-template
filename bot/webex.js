@@ -1,5 +1,5 @@
 module.exports = {
-    init: (Botkit) => {
+    init: () => {
         require('node-env-file')(__dirname + '/../.env');
 
 

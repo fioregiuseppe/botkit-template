@@ -29,36 +29,35 @@ module.exports = {
             }
         });
 
-
-        controller.createWebhookEndpoints(webServer, bot, function() {
-            console.log("webhooks setup completed!");
-        });
         var port = 3000;
+        controller.setupWebserver(port, function(err, webserver) {
+            controller.createWebhookEndpoints(webserver, bot, function() {
+                console.log("webhooks setup completed!");
+            });
+            // installing Healthcheck
+            var healthcheck = {
+                "up_since": new Date(Date.now()).toGMTString(),
+                "hostname": require('os').hostname() + ":" + port,
+                "version": "v" + require("../package.json").version,
+                "bot": "unknown", // loaded asynchronously
+                "botkit": "v" + bot.botkit.version()
+            };
 
-        // installing Healthcheck
-        var healthcheck = {
-            "up_since": new Date(Date.now()).toGMTString(),
-            "hostname": require('os').hostname() + ":" + port,
-            "version": "v" + require("../package.json").version,
-            "bot": "unknown", // loaded asynchronously
-            "botkit": "v" + bot.botkit.version()
-        };
+            webserver.get('/slack', function(req, res) {
 
-        webServer.get('/slack', function(req, res) {
-
-            // As the identity is load asynchronously from the Webex Teams access token, we need to check until it's fetched
-            if (healthcheck.bot == "unknown") {
-                var identity = bot.botkit.identity;
-                if (bot.botkit.identity) {
-                    healthcheck.bot = bot.botkit.identity.emails[0];
+                // As the identity is load asynchronously from the Webex Teams access token, we need to check until it's fetched
+                if (healthcheck.bot == "unknown") {
+                    var identity = bot.botkit.identity;
+                    if (bot.botkit.identity) {
+                        healthcheck.bot = bot.botkit.identity.emails[0];
+                    }
                 }
-            }
 
-            res.json(healthcheck);
+                res.json(healthcheck);
+            });
+
+            console.log("healthcheck available at: /slack");
         });
-
-        console.log("healthcheck available at: /slack");
-
         /*controller.hears('(.*)', ['message_received', 'direct_message', 'direct_mention', 'mention', 'ambient'], function(slackBot, message) {
             console.log(message);
             console.log(message.text);
