@@ -97,3 +97,23 @@ require("fs").readdirSync(normalizedPath).forEach(function(file) {
         }
     }
 });
+
+bot.appendMention = function(message, command) {
+
+    // if the message is a raw message (from a post message callback such as bot.say())
+    if (message.roomType && (message.roomType == "group")) {
+        var botName = bot.botkit.identity.displayName;
+        return "`@" + botName + " " + command + "`";
+    }
+
+    // if the message is a Botkit message
+    if (message.raw_message && (message.raw_message.data.roomType == "group")) {
+        var botName = bot.botkit.identity.displayName;
+        return "`@" + botName + " " + command + "`";
+    }
+
+    return "`" + command + "`";
+}
+
+// [COMPAT] Adding this function to ease interoperability with the skills part of the Botkit samples project
+bot.enrichCommand = bot.appendMention;
