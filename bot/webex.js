@@ -5,8 +5,8 @@ module.exports = {
 
         // Fetch token from environement
         // [COMPAT] supports SPARK_TOKEN for backward compatibility
-        var webexToken = process.env.ACCESS_TOKEN || process.env.SPARK_TOKEN
-        if (!webexToken) {
+        var accessToken = process.env.ACCESS_TOKEN || process.env.SPARK_TOKEN
+        if (!accessToken) {
             console.log("Could not start as this bot requires a Webex Teams API access token.");
             console.log("Please invoke with an ACCESS_TOKEN environment variable");
             console.log("Example:");
@@ -37,11 +37,18 @@ module.exports = {
             process.exit(1);
         }
 
+
+        //
+        // Create bot
+        //
+
+
+
         var env = process.env.NODE_ENV || "development";
         var controller = Botkit.sparkbot({
             log: true,
             public_address: public_url,
-            ciscospark_access_token: webexToken,
+            ciscospark_access_token: accessToken,
             secret: process.env.SECRET, // this is a RECOMMENDED security setting that checks if incoming payloads originate from Webex
             webhook_name: process.env.WEBHOOK_NAME || ('built with BotKit (' + env + ')')
         });
@@ -51,10 +58,15 @@ module.exports = {
         var bot = controller.spawn({});
 
 
+        //
+        // Launch bot
+        //
+
+        var port = process.env.PORT || 3000;
+
         controller.createWebhookEndpoints(webServer, bot, function() {
             console.log("webhooks setup completed!");
         });
-        var port = 3000;
 
         // installing Healthcheck
         var healthcheck = {
@@ -64,8 +76,7 @@ module.exports = {
             "bot": "unknown", // loaded asynchronously
             "botkit": "v" + bot.botkit.version()
         };
-
-        webServer.get('/', function(req, res) {
+        webServer.get(process.env.HEALTHCHECK_ROUTE, function(req, res) {
 
             // As the identity is load asynchronously from the Webex Teams access token, we need to check until it's fetched
             if (healthcheck.bot == "unknown") {
@@ -77,14 +88,13 @@ module.exports = {
 
             res.json(healthcheck);
         });
+        console.log("healthcheck available at: " + process.env.HEALTHCHECK_ROUTE);
 
-        console.log("healthcheck available at: /");
 
-        /*controller.hears('(.*)', ['message_received', 'direct_message', 'direct_mention', 'mention', 'ambient'], function(slackBot, message) {
-            console.log(message);
-            console.log(message.text);
-            slackBot.reply(message, 'Hello');
-        });*/
+
+        //
+        // Load skills
+        //
 
         var normalizedPath = require("path").join(__dirname, "../skills");
         require("fs").readdirSync(normalizedPath).forEach(function(file) {
@@ -99,6 +109,7 @@ module.exports = {
                 }
             }
         });
+
 
         //
         // Webex Teams Utilities
