@@ -51,27 +51,8 @@ var bot = controller.spawn({
 // Load skills
 //
 
-/*controller.hears('(.*)', ['message_received', 'direct_message', 'direct_mention', 'mention', 'ambient'], function(slackBot, message) {
+controller.hears('(.*)', ['message_received', 'direct_message', 'direct_mention', 'mention', 'ambient'], function(slackBot, message) {
     console.log(message);
     console.log(message.text);
-});*/
-
-
-
-//
-// Load skills
-//
-
-var normalizedPath = require("path").join(__dirname, "skills");
-require("fs").readdirSync(normalizedPath).forEach(function(file) {
-    try {
-        require("./skills/" + file)(controller, bot);
-        console.log("loaded skill: " + file);
-    } catch (err) {
-        if (err.code == "MODULE_NOT_FOUND") {
-            if (file != "utils") {
-                console.log("could not load skill: " + file);
-            }
-        }
-    }
+    slackBot.reply(message, 'Hello');
 });
