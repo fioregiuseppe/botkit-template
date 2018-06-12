@@ -4,7 +4,7 @@ var slack = require('./bot/slack');
 
 var webServer = express();
 
-webServer.get('/', function(req, res) {
+webServer.get('/test', function(req, res) {
     res.send('Hello World!');
 });
 

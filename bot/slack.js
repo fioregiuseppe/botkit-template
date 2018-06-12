@@ -33,7 +33,8 @@ module.exports = {
         controller.createWebhookEndpoints(webServer, bot, function() {
             console.log("webhooks setup completed!");
         });
-        var port = process.env.port | 3000;
+        var port = 3000;
+
         // installing Healthcheck
         var healthcheck = {
             "up_since": new Date(Date.now()).toGMTString(),
@@ -43,7 +44,7 @@ module.exports = {
             "botkit": "v" + bot.botkit.version()
         };
 
-        webServer.get('/slack', function(req, res) {
+        webServer.get('/', function(req, res) {
 
             // As the identity is load asynchronously from the Webex Teams access token, we need to check until it's fetched
             if (healthcheck.bot == "unknown") {
