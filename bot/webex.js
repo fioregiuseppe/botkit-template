@@ -1,5 +1,5 @@
 module.exports = {
-    init: (Botkit, webServer) => {
+    init: (Botkit) => {
         require('node-env-file')(__dirname + '/../.env');
 
 
@@ -63,33 +63,33 @@ module.exports = {
         //
 
         var port = process.env.PORT || 3000;
+        controller.setupWebserver(port, function(err, webserver) {
+            controller.createWebhookEndpoints(webserver, bot, function() {
+                console.log("webhooks setup completed!");
+            });
 
-        controller.createWebhookEndpoints(webServer, bot, function() {
-            console.log("webhooks setup completed!");
-        });
+            var healthcheck = {
+                "up_since": new Date(Date.now()).toGMTString(),
+                "hostname": require('os').hostname() + ":" + port,
+                "version": "v" + require("../package.json").version,
+                "bot": "unknown", // loaded asynchronously
+                "botkit": "v" + bot.botkit.version()
+            };
+            webserver.get(process.env.HEALTHCHECK_ROUTE, function(req, res) {
 
-        var healthcheck = {
-            "up_since": new Date(Date.now()).toGMTString(),
-            "hostname": require('os').hostname() + ":" + port,
-            "version": "v" + require("../package.json").version,
-            "bot": "unknown", // loaded asynchronously
-            "botkit": "v" + bot.botkit.version()
-        };
-        webServer.get(process.env.HEALTHCHECK_ROUTE, function(req, res) {
-
-            // As the identity is load asynchronously from the Webex Teams access token, we need to check until it's fetched
-            if (healthcheck.bot == "unknown") {
-                var identity = bot.botkit.identity;
-                if (bot.botkit.identity) {
-                    healthcheck.bot = bot.botkit.identity.emails[0];
+                // As the identity is load asynchronously from the Webex Teams access token, we need to check until it's fetched
+                if (healthcheck.bot == "unknown") {
+                    var identity = bot.botkit.identity;
+                    if (bot.botkit.identity) {
+                        healthcheck.bot = bot.botkit.identity.emails[0];
+                    }
                 }
-            }
 
-            res.json(healthcheck);
+                res.json(healthcheck);
+            });
+
+            console.log("healthcheck available at: " + process.env.HEALTHCHECK_ROUTE);
         });
-
-        console.log("healthcheck available at: " + process.env.HEALTHCHECK_ROUTE);
-
 
 
         //
