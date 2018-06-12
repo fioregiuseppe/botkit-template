@@ -8,9 +8,9 @@ var webServer = express();
 webServer.get('/', function(req, res) {
     res.send('Hello World!');
 });
-slack.init();
-webex.init();
-webServer.listen(3002, function() {
-    console.log('Example app listening on port 3002!');
 
+webServer.listen(3001, function() {
+    console.log('Example app listening on port 3002!');
+    slack.init();
+    webex.init();
 });
