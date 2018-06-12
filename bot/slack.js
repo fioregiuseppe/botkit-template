@@ -28,7 +28,7 @@ module.exports = {
             }
         });
 
-        var port = 3000;
+        var port = 3002;
         controller.setupWebserver(port, function(err, webserver) {
             controller.createWebhookEndpoints(webserver, bot, function() {
                 console.log("webhooks setup completed!");
