@@ -8,8 +8,7 @@ webServer.get('/', function(req, res) {
     res.send('Hello World!');
 });
 
-await webServer.listen(3000, function() {
+webServer.listen(3000, function() {
     console.log('Example app listening on port 3000!');
+    slack.init(Botkit, webServer);
 });
-
-slack.init(Botkit, webServer);
