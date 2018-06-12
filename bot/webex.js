@@ -1,7 +1,17 @@
 module.exports = {
     init: () => {
+
+        // Copyright (c) 2017 Cisco Systems
+        // Licensed under the MIT License 
+        //
+
+        //
+        // BotKit configuration
+        //
+
+        // Load environment variables from project .env file
         require('node-env-file')(__dirname + '/../.env');
-        var Botkit = require('botkit');
+
 
         // Fetch token from environement
         // [COMPAT] supports SPARK_TOKEN for backward compatibility
@@ -42,7 +52,7 @@ module.exports = {
         // Create bot
         //
 
-
+        var Botkit = require('botkit');
 
         var env = process.env.NODE_ENV || "development";
         var controller = Botkit.sparkbot({
@@ -62,12 +72,13 @@ module.exports = {
         // Launch bot
         //
 
-        var port = 3000;
+        var port = process.env.PORT || 3000;
         controller.setupWebserver(port, function(err, webserver) {
             controller.createWebhookEndpoints(webserver, bot, function() {
                 console.log("webhooks setup completed!");
             });
 
+            // installing Healthcheck
             var healthcheck = {
                 "up_since": new Date(Date.now()).toGMTString(),
                 "hostname": require('os').hostname() + ":" + port,
@@ -87,7 +98,6 @@ module.exports = {
 
                 res.json(healthcheck);
             });
-
             console.log("healthcheck available at: " + process.env.HEALTHCHECK_ROUTE);
         });
 
@@ -99,7 +109,7 @@ module.exports = {
         var normalizedPath = require("path").join(__dirname, "../skills");
         require("fs").readdirSync(normalizedPath).forEach(function(file) {
             try {
-                require("../skills/" + file)(controller, bot);
+                require("./../skills/" + file)(controller, bot);
                 console.log("loaded skill: " + file);
             } catch (err) {
                 if (err.code == "MODULE_NOT_FOUND") {
