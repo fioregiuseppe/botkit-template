@@ -1,8 +1,7 @@
 module.exports = {
     init: () => {
-        var Botkit = require('botkit');
         require('node-env-file')(__dirname + '/../.env');
-
+        var Botkit = require('botkit');
 
         // Fetch token from environement
         // [COMPAT] supports SPARK_TOKEN for backward compatibility
@@ -63,7 +62,7 @@ module.exports = {
         // Launch bot
         //
 
-        var port = 3001;
+        var port = 3000;
         controller.setupWebserver(port, function(err, webserver) {
             controller.createWebhookEndpoints(webserver, bot, function() {
                 console.log("webhooks setup completed!");
