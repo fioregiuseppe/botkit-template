@@ -1,8 +1,7 @@
 module.exports = {
-    init: (Botkit, webServer) => {
+    init: () => {
         require('node-env-file')(__dirname + '/../.env');
-
-
+        var Botkit = require('botkit');
         // Fetch token from environement
         // [COMPAT] supports SPARK_TOKEN for backward compatibility
         var slackToken = process.env.SLACK_TOKEN
