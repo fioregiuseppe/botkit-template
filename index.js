@@ -4,3 +4,4 @@ var controller = require('./bot/webex/controller.js')();
 // so we can extend it and process incoming message payloads 
 var webserver = require('./webserver.js')(controller);
 require('./bot/webex/init.js')(controller, webserver);
+require('./bot/slack/init.js')(controller, webserver);
