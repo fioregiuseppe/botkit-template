@@ -78,6 +78,20 @@ module.exports = function(controller, webserver) {
         console.log(message.text);
         slackBot.reply(message, 'Hello');
     });*/
+    //
+    // Slack  Utilities
+    //
+
+    // Utility to add mentions if Bot is in a 'Group' space
+    bot.appendMention = function(message, command) {
+
+        // TODO 
+
+        return "`" + command + "`";
+    }
+
+    // [COMPAT] Adding this function to ease interoperability with the skills part of the Botkit samples project
+    bot.enrichCommand = bot.appendMention;
     require('./load_skills.js')(controller, bot);
     console.log("healthcheck available at: /slack");
 }
