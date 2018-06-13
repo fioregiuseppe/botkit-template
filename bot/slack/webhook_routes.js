@@ -1,4 +1,5 @@
 module.exports = function(controller, webserver) {
+
     console.log("> ROUTES SLACK");
     var bot = controller.spawn({
         token: controller.slackToken
@@ -50,6 +51,7 @@ module.exports = function(controller, webserver) {
             }
         }
     });*/
+    var port = process.env.PORT || 3000;
     var healthcheck = {
         "up_since": new Date(Date.now()).toGMTString(),
         "hostname": require('os').hostname() + ":" + port,
