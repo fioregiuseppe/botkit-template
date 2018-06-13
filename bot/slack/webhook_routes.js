@@ -7,7 +7,7 @@ module.exports = function(controller, webserver) {
         res.send('ok');
 
         var bot = controller.spawn({
-            token: slackToken
+            token: controller.slackToken
         }).startRTM(function(err, bot, payload) {
             if (err) {
                 throw new Error('Could not connect to Slack');
