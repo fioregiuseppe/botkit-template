@@ -22,7 +22,7 @@ module.exports = function(controller, bot) {
     // for all incoming requests from FB
     // We are passing in the webserver we created, and the botkit
     // controller into our routes file so we can extend both of them 
-    require('./webhook_routes.js')(webserver, controller)
+    require('./bot/webex/webhook_routes.js')(webserver, controller)
 
     controller.webserver = webserver;
     return webserver;
