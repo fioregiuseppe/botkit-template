@@ -1,5 +1,5 @@
 var webex_controller = require('./bot/webex/controller.js')();
-var slack_controller = require('./bot/webex/controller.js')();
+var slack_controller = require('./bot/slack/controller.js')();
 // Set up an Express-powered webserver to expose oauth and webhook endpoints
 // We are passing the controller object into our express server module
 // so we can extend it and process incoming message payloads 
