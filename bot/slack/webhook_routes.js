@@ -9,11 +9,9 @@ module.exports = function(controller, webserver) {
         }
     });
     console.log('TT:' + bot.token);
-    /*controller.createWebhookEndpoints(webserver, bot, function() {
-        console.log("webhooks setup completed!");
-    });*/
 
-    /*// Receive post data from fb, this will be the messages you receive 
+
+    // Receive post data from fb, this will be the messages you receive 
     webserver.post('/slack/receive', function(req, res) {
         console.log("> RECEIVE POST SLACK");
         // respond to FB that the webhook has been received.
@@ -40,6 +38,7 @@ module.exports = function(controller, webserver) {
         // Now, pass the webhook into be processed
         controller.handleWebhookPayload(req, res, bot);
     });
+    /*
     // Perform the webhook verification handshake with your verify token 
     webserver.get('/slack/receive', function(req, res) {
         console.log("> RECEIVE GET SLACK");
