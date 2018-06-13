@@ -73,11 +73,11 @@ module.exports = function(controller, webserver) {
         res.json(healthcheck);
     });
 
-    controller.hears('(.*)', ['message_received', 'direct_message', 'direct_mention', 'mention', 'ambient'], function(slackBot, message) {
+    /*controller.hears('(.*)', ['message_received', 'direct_message', 'direct_mention', 'mention', 'ambient'], function(slackBot, message) {
         console.log(message);
         console.log(message.text);
         slackBot.reply(message, 'Hello');
-    });
-
+    });*/
+    require('./load_skills.js')(controller, bot);
     console.log("healthcheck available at: /slack");
 }
