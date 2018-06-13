@@ -27,9 +27,6 @@ module.exports = function(controller, webserver) {
 
         // Utility to add mentions if Bot is in a 'Group' space
         bot.appendMention = function(message, command) {
-
-            // TODO 
-
             return "`" + command + "`";
         }
 
