@@ -1,7 +1,8 @@
 module.exports = function(controller, webserver) {
+    console.log("> ROUTES SLACK");
     // Receive post data from fb, this will be the messages you receive 
     webserver.post('/slack/receive', function(req, res) {
-
+        console.log("> RECEIVE POST SLACK");
         // respond to FB that the webhook has been received.
         res.status(200);
         res.send('ok');
@@ -37,6 +38,7 @@ module.exports = function(controller, webserver) {
     });
     // Perform the webhook verification handshake with your verify token 
     webserver.get('/slack/receive', function(req, res) {
+        console.log("> RECEIVE GET SLACK");
         if (req.query['hub.mode'] == 'subscribe') {
             if (req.query['hub.verify_token'] == controller.config.verify_token) {
                 res.send(req.query['hub.challenge']);

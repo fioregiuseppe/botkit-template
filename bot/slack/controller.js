@@ -5,12 +5,10 @@ module.exports = function() {
     // Fetch token from environement
     // [COMPAT] supports SPARK_TOKEN for backward compatibility
     var slackToken = process.env.SLACK_TOKEN
-    console.log("> SLACK_TOKEN=XXXXXXXXXXXX node slackbot.js");
+    console.log("> CONTROLLER SLACK");
     if (!slackToken) {
         console.log("Could not start as this bot requires a Webex Teams API access token.");
         console.log("Please invoke with an SLACK_TOKEN environment variable");
-        console.log("Example:");
-        console.log("> SLACK_TOKEN=XXXXXXXXXXXX node slackbot.js");
         process.exit(1);
     }
     var Botkit = require('botkit');
