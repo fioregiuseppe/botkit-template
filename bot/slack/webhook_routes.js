@@ -7,11 +7,12 @@ module.exports = function(controller, webserver) {
             throw new Error('Could not connect to Slack');
         }
     });
+    console.log('TT:' + bot.token);
     controller.createWebhookEndpoints(webserver, bot, function() {
         console.log("webhooks setup completed!");
     });
 
-    // Receive post data from fb, this will be the messages you receive 
+    /*// Receive post data from fb, this will be the messages you receive 
     webserver.post('/slack/receive', function(req, res) {
         console.log("> RECEIVE POST SLACK");
         // respond to FB that the webhook has been received.
@@ -48,5 +49,27 @@ module.exports = function(controller, webserver) {
                 res.send('OK');
             }
         }
+    });*/
+    var healthcheck = {
+        "up_since": new Date(Date.now()).toGMTString(),
+        "hostname": require('os').hostname() + ":" + port,
+        "version": "v" + require("../../package.json").version,
+        "bot": "unknown", // loaded asynchronously
+        "botkit": "v" + bot.botkit.version()
+    };
+
+    webserver.get('/slack', function(req, res) {
+
+        // As the identity is load asynchronously from the Webex Teams access token, we need to check until it's fetched
+        if (healthcheck.bot == "unknown") {
+            var identity = bot.botkit.identity;
+            if (bot.botkit.identity) {
+                healthcheck.bot = bot.botkit.identity.emails[0];
+            }
+        }
+
+        res.json(healthcheck);
     });
+
+    console.log("healthcheck available at: /slack");
 }
