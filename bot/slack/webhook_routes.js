@@ -1,5 +1,16 @@
 module.exports = function(controller, webserver) {
 
+    var bot = controller.spawn({
+        token: controller.slackToken
+    }).startRTM(function(err, bot, payload) {
+        if (err) {
+            throw new Error('Could not connect to Slack');
+        }
+    });
+
+    controller.createWebhookEndpoints(webserver, bot, function() {
+        console.log("slack webhooks setup completed!");
+    });
 
     // Receive post data from fb, this will be the messages you receive 
     webserver.post('/slack/receive', function(req, res) {
@@ -7,19 +18,6 @@ module.exports = function(controller, webserver) {
         // respond to FB that the webhook has been received.
         res.status(200);
         res.send('ok');
-
-        var bot = controller.spawn({
-            token: controller.slackToken
-        }).startRTM(function(err, bot, payload) {
-            if (err) {
-                throw new Error('Could not connect to Slack');
-            }
-        });
-
-        controller.createWebhookEndpoints(webserver, bot, function() {
-            console.log("slack webhooks setup completed!");
-        });
-
 
         //
         // Slack  Utilities
