@@ -18,12 +18,6 @@ module.exports = function(controller, bot) {
             process.env.HOSTNAME || 'http://localhost/' + ':' + process.env.PORT || 3000);
 
     });
-    // Register our routes, in this case we're just using one route
-    // for all incoming requests from FB
-    // We are passing in the webserver we created, and the botkit
-    // controller into our routes file so we can extend both of them 
-    require('./bot/webex/webhook_routes.js')(webserver, controller)
 
-    controller.webserver = webserver;
     return webserver;
 }

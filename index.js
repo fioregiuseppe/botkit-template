@@ -3,7 +3,7 @@ var controller = require('./bot/webex/controller.js')();
 // We are passing the controller object into our express server module
 // so we can extend it and process incoming message payloads 
 var webserver = require('./webserver.js')(controller);
-
+require('./bot/webex/init.js')(controller, webserver);
 
 
 // Load skills

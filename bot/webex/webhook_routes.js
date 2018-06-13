@@ -1,4 +1,4 @@
-module.exports = function(webserver, controller) {
+module.exports = function(controller, webserver) {
     // Receive post data from fb, this will be the messages you receive 
     webserver.post('/ciscospark/receive', function(req, res) {
 
