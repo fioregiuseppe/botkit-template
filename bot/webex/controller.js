@@ -1,6 +1,6 @@
 module.exports = function() {
     // Load environment variables from project .env file
-    require('node-env-file')(__dirname + '/.env');
+    require('node-env-file')(__dirname + '/../../.env');
 
 
     // Fetch token from environement
