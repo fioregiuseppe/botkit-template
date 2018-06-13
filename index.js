@@ -52,3 +52,47 @@ var controller = Botkit.sparkbot({
 // We are passing the controller object into our express server module
 // so we can extend it and process incoming message payloads 
 var webserver = require('./webserver.js')(controller);
+
+
+// Load skills
+//
+
+var normalizedPath = require("path").join(__dirname, "skills");
+require("fs").readdirSync(normalizedPath).forEach(function(file) {
+    try {
+        require("./skills/" + file)(controller, bot);
+        console.log("loaded skill: " + file);
+    } catch (err) {
+        if (err.code == "MODULE_NOT_FOUND") {
+            if (file != "utils") {
+                console.log("could not load skill: " + file);
+            }
+        }
+    }
+});
+
+
+//
+// Webex Teams Utilities
+//
+
+// Utility to add mentions if Bot is in a 'Group' space
+bot.appendMention = function(message, command) {
+
+    // if the message is a raw message (from a post message callback such as bot.say())
+    if (message.roomType && (message.roomType == "group")) {
+        var botName = bot.botkit.identity.displayName;
+        return "`@" + botName + " " + command + "`";
+    }
+
+    // if the message is a Botkit message
+    if (message.raw_message && (message.raw_message.data.roomType == "group")) {
+        var botName = bot.botkit.identity.displayName;
+        return "`@" + botName + " " + command + "`";
+    }
+
+    return "`" + command + "`";
+}
+
+// [COMPAT] Adding this function to ease interoperability with the skills part of the Botkit samples project
+bot.enrichCommand = bot.appendMention;
