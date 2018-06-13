@@ -1,5 +1,5 @@
 module.exports = function(controller, bot) {
-    var normalizedPath = require("path").join(__dirname, "skills");
+    var normalizedPath = require("path").join(__dirname, "../../skills");
     require("fs").readdirSync(normalizedPath).forEach(function(file) {
         try {
             require("../../skills/" + file)(controller, bot);
