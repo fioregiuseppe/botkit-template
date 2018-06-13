@@ -48,6 +48,7 @@ var controller = Botkit.sparkbot({
     secret: process.env.SECRET, // this is a RECOMMENDED security setting that checks if incoming payloads originate from Webex
     webhook_name: process.env.WEBHOOK_NAME || ('built with BotKit (' + env + ')')
 });
+var bot = controller.spawn({});
 // Set up an Express-powered webserver to expose oauth and webhook endpoints
 // We are passing the controller object into our express server module
 // so we can extend it and process incoming message payloads 
