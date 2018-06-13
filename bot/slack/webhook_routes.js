@@ -9,9 +9,9 @@ module.exports = function(controller, webserver) {
         }
     });
     console.log('TT:' + bot.token);
-    controller.createWebhookEndpoints(webserver, bot, function() {
+    /*controller.createWebhookEndpoints(webserver, bot, function() {
         console.log("webhooks setup completed!");
-    });
+    });*/
 
     /*// Receive post data from fb, this will be the messages you receive 
     webserver.post('/slack/receive', function(req, res) {
