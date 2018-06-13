@@ -33,6 +33,8 @@ module.exports = function(webserver, controller) {
         // [COMPAT] Adding this function to ease interoperability with the skills part of the Botkit samples project
         bot.enrichCommand = bot.appendMention;
 
+        require('./load_skills.js')(controller, bot);
+
         // Now, pass the webhook into be processed
         controller.handleWebhookPayload(req, res, bot);
     });
