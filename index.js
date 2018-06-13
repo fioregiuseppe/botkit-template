@@ -4,21 +4,3 @@ var controller = require('./bot/webex/controller.js')();
 // so we can extend it and process incoming message payloads 
 var webserver = require('./webserver.js')(controller);
 require('./bot/webex/init.js')(controller, webserver);
-
-
-// Load skills
-//
-
-var normalizedPath = require("path").join(__dirname, "skills");
-require("fs").readdirSync(normalizedPath).forEach(function(file) {
-    try {
-        require("./skills/" + file)(controller, bot);
-        console.log("loaded skill: " + file);
-    } catch (err) {
-        if (err.code == "MODULE_NOT_FOUND") {
-            if (file != "utils") {
-                console.log("could not load skill: " + file);
-            }
-        }
-    }
-});
