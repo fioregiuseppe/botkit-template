@@ -73,11 +73,6 @@ module.exports = function(controller, webserver) {
         res.json(healthcheck);
     });
 
-    /*controller.hears('(.*)', ['message_received', 'direct_message', 'direct_mention', 'mention', 'ambient'], function(slackBot, message) {
-        console.log(message);
-        console.log(message.text);
-        slackBot.reply(message, 'Hello');
-    });*/
     //
     // Slack  Utilities
     //
