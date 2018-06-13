@@ -55,23 +55,6 @@ var bot = controller.spawn({});
 var webserver = require('./webserver.js')(controller);
 
 
-// Load skills
-//
-
-var normalizedPath = require("path").join(__dirname, "skills");
-require("fs").readdirSync(normalizedPath).forEach(function(file) {
-    try {
-        require("./skills/" + file)(controller, bot);
-        console.log("loaded skill: " + file);
-    } catch (err) {
-        if (err.code == "MODULE_NOT_FOUND") {
-            if (file != "utils") {
-                console.log("could not load skill: " + file);
-            }
-        }
-    }
-});
-
 
 //
 // Webex Teams Utilities
@@ -97,3 +80,21 @@ bot.appendMention = function(message, command) {
 
 // [COMPAT] Adding this function to ease interoperability with the skills part of the Botkit samples project
 bot.enrichCommand = bot.appendMention;
+
+
+// Load skills
+//
+
+var normalizedPath = require("path").join(__dirname, "skills");
+require("fs").readdirSync(normalizedPath).forEach(function(file) {
+    try {
+        require("./skills/" + file)(controller, bot);
+        console.log("loaded skill: " + file);
+    } catch (err) {
+        if (err.code == "MODULE_NOT_FOUND") {
+            if (file != "utils") {
+                console.log("could not load skill: " + file);
+            }
+        }
+    }
+});
