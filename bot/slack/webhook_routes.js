@@ -12,6 +12,21 @@ module.exports = function(controller, webserver) {
         console.log("slack webhooks setup completed!");
     });
 
+    //
+    // Slack  Utilities
+    //
+
+    // Utility to add mentions if Bot is in a 'Group' space
+    bot.appendMention = function(message, command) {
+        return "`" + command + "`";
+    }
+
+    // [COMPAT] Adding this function to ease interoperability with the skills part of the Botkit samples project
+    bot.enrichCommand = bot.appendMention;
+
+    require('./load_skills.js')(controller, bot);
+
+
     // Receive post data from fb, this will be the messages you receive 
     webserver.post('/slack/receive', function(req, res) {
         console.log("> RECEIVE POST SLACK");
@@ -19,19 +34,6 @@ module.exports = function(controller, webserver) {
         res.status(200);
         res.send('ok');
 
-        //
-        // Slack  Utilities
-        //
-
-        // Utility to add mentions if Bot is in a 'Group' space
-        bot.appendMention = function(message, command) {
-            return "`" + command + "`";
-        }
-
-        // [COMPAT] Adding this function to ease interoperability with the skills part of the Botkit samples project
-        bot.enrichCommand = bot.appendMention;
-
-        require('./load_skills.js')(controller, bot);
 
         // Now, pass the webhook into be processed
         controller.handleWebhookPayload(req, res, bot);
