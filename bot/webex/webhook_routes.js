@@ -1,13 +1,16 @@
 module.exports = function(controller, webserver) {
+
     // Receive post data from fb, this will be the messages you receive 
     webserver.post('/ciscospark/receive', function(req, res) {
 
-        // respond to FB that the webhook has been received.
+        // respond  that the webhook has been received.
         res.status(200);
         res.send('ok');
 
         var bot = controller.spawn({});
-
+        controller.createWebhookEndpoints(webserver, bot, function() {
+            console.log("webex webhooks setup completed!");
+        });
         //
         // Webex Teams Utilities
         //
