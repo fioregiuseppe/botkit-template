@@ -1,7 +1,7 @@
 module.exports = function(controller, webserver) {
 
     // Register our routes, in this case we're just using one route
-    // for all incoming requests from FB
+    // for all incoming requests
     // We are passing in the webserver we created, and the botkit
     // controller into our routes file so we can extend both of them 
 
