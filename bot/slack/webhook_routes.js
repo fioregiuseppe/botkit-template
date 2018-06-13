@@ -49,14 +49,6 @@ module.exports = function(controller, webserver) {
 
     webserver.get('/slack/receive', function(req, res) {
 
-        // As the identity is load asynchronously from the Webex Teams access token, we need to check until it's fetched
-        /*if (healthcheck.bot == "unknown") {
-            var identity = bot.botkit.identity;
-            if (bot.botkit.identity) {
-                healthcheck.bot = bot.botkit.identity.emails[0];
-            }
-        }*/
-
         res.json(healthcheck);
     });
 
