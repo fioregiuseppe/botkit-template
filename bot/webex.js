@@ -74,6 +74,7 @@ module.exports = {
 
         var port = process.env.PORT || 3000;
         controller.setupWebserver(port, function(err, webserver) {
+            console.log(webserver._router.stack);
             controller.createWebhookEndpoints(webserver, bot, function() {
                 console.log("webhooks setup completed!");
             });
