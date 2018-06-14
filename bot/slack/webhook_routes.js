@@ -48,7 +48,6 @@ module.exports = function(controller, webserver) {
     };
 
     webserver.get('/slack/receive', function(req, res) {
-
         res.json(healthcheck);
     });
 
