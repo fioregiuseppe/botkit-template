@@ -1,10 +1,13 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var querystring = require('querystring');
+var session = require('express-session');
+
 
 module.exports = function(controller, bot) {
 
     var webserver = express();
+    webserver.use(session({ secret: 'itlBot', cookie: { maxAge: 60000 } }));
     webserver.use(bodyParser.json());
     webserver.use(bodyParser.urlencoded({ extended: true }));
 
