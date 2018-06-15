@@ -9,6 +9,11 @@ module.exports = function(controller, bot) {
     webserver.use(bodyParser.urlencoded({ extended: true }));
 
     webserver.use(express.static('public'));
+    webserver.use(function(req, res, next) {
+        console.log(req);
+        next();
+    });
+
     require('./routes.js')(webserver);
     // You can pass in whatever hostname you want as the second argument
     // of the express listen function, it defaults to 0.0.0.0 aka localhost 
