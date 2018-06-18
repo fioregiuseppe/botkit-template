@@ -3,7 +3,7 @@ var jsonParser = bodyParser.json();
 
 module.exports = function(webserver) {
     webserver.get('/', function(req, res) {
-        console.log(req.body);
+        console.log(req.sessionID);
         res.json({ msg: 'hello' });
     });
 
