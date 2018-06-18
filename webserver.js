@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var querystring = require('querystring');
 var session = require('express-session');
-
+var jsonParser = bodyParser.json();
 
 module.exports = function(controller, bot) {
 
