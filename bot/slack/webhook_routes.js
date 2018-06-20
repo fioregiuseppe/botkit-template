@@ -1,4 +1,5 @@
-module.exports = function(controller, webserver) {
+module.exports = function(controller) {
+    var webserver = controller.webserver;
 
     var bot = controller.spawn({
         token: controller.slackToken
