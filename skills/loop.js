@@ -1,49 +1,45 @@
+var lib = require('../lib.js');
 //
 // Example of a conversation with a menu that loops until explicitly stopped
 //
-module.exports = function (controller) {
+module.exports = function(controller) {
 
-    controller.hears([/^loop$/], 'direct_message,direct_mention', function (bot, message) {
+    controller.hears([/^loop$/], 'direct_message,direct_mention', function(bot, message) {
 
-        bot.startConversation(message, function (err, convo) {
+        bot.startConversation(message, function(err, convo) {
 
             var question = "Here are a few proposed DevNet activities:";
             question += "<br/> `1)` join a Community Of Interest (**communities**)";
             question += "<br/> `2)` take a Learning Lab (**labs**)";
             question += "<br/> `3)` check Upcoming Events (**events**)";
             question += "\n\nWhat do you want to check?<br/>_(type a number, a **bold keyword** or `stop`)_";
-            convo.ask(question, [
-                {
-                    pattern: "1|community|communities",
-                    callback: function (response, convo) {
-                        convo.gotoThread('menu_1');
-                    },
+            question = lib.htmlEntities(question);
+            convo.ask(question, [{
+                pattern: "1|community|communities",
+                callback: function(response, convo) {
+                    convo.gotoThread('menu_1');
+                },
+            }, {
+                pattern: "2|lab|track|learn",
+                callback: function(response, convo) {
+                    convo.gotoThread('menu_2');
+                },
+            }, {
+                pattern: "3|event|express",
+                callback: function(response, convo) {
+                    convo.gotoThread('menu_3');
+                },
+            }, {
+                pattern: "cancel|stop",
+                callback: function(response, convo) {
+                    convo.gotoThread('action_cancel');
+                },
+            }, {
+                default: true,
+                callback: function(response, convo) {
+                    convo.gotoThread('bad_response');
                 }
-                , {
-                    pattern: "2|lab|track|learn",
-                    callback: function (response, convo) {
-                        convo.gotoThread('menu_2');
-                    },
-                }
-                , {
-                    pattern: "3|event|express",
-                    callback: function (response, convo) {
-                        convo.gotoThread('menu_3');
-                    },
-                }
-                , {
-                    pattern: "cancel|stop",
-                    callback: function (response, convo) {
-                        convo.gotoThread('action_cancel');
-                    },
-                }
-                , {
-                    default: true,
-                    callback: function (response, convo) {
-                        convo.gotoThread('bad_response');
-                    }
-                }
-            ]);
+            }]);
 
             // Menu option 1)
             convo.addMessage({
