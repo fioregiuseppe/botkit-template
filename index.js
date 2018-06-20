@@ -25,3 +25,6 @@ require('./bot/webex/init.js')(webserver, process.env.ACCESS_TOKEN, public_url, 
 // SLACK
 var slackToken = process.env.SLACK_TOKEN
 require('./bot/slack/init.js')(webserver, slackToken);
+
+var slackToken2 = process.env.SLACK_TOKEN2
+require('./bot/slack/init.js')(webserver, slackToken2);
