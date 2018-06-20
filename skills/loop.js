@@ -1,4 +1,3 @@
-var lib = require('../lib.js');
 //
 // Example of a conversation with a menu that loops until explicitly stopped
 //
@@ -13,7 +12,6 @@ module.exports = function(controller) {
             question += "<br/> `2)` take a Learning Lab (**labs**)";
             question += "<br/> `3)` check Upcoming Events (**events**)";
             question += "\n\nWhat do you want to check?<br/>_(type a number, a **bold keyword** or `stop`)_";
-            question = lib.htmlEntities(question);
             convo.ask(question, [{
                 pattern: "1|community|communities",
                 callback: function(response, convo) {
