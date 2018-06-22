@@ -8,6 +8,7 @@ var session = require('express-session');
 module.exports = function(controller, bot) {
 
     var webserver = express();
+    webserver.use(express.static('public'));
     webserver.use(session({ secret: 'itlBot', cookie: { maxAge: 60000 } }));
     webserver.use(bodyParser.json());
     webserver.use(bodyParser.urlencoded({ extended: true }));

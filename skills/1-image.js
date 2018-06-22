@@ -60,14 +60,14 @@ module.exports = function(controller) {
                 streamResult.stream // => Stream object
                 streamResult.length // => Integer length of stream
                     // write to a file
-                return chartNode.writeImageToFile('image/png', './testimage.png');
+                return chartNode.writeImageToFile('image/png', __basedir + '/public/images/testimage.png');
             })
             .then(() => {
                 // chart is now written to the file path
                 // ./testimage.png
                 bot.reply(message, {
                     text: 'Chart Image',
-                    files: [fs.createReadStream('./testimage.png')]
+                    files: [fs.createReadStream(__basedir + '/public/images/testimage.png')]
                 });
             });
 

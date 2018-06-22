@@ -1,6 +1,7 @@
 // Set up an Express-powered webserver to expose oauth and webhook endpoints
 // We are passing the controller object into our express server module
 // so we can extend it and process incoming message payloads 
+global.__basedir = __dirname;
 var webserver = require('./webserver.js')();
 
 
