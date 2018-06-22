@@ -3,7 +3,6 @@ module.exports = function(controller, bot) {
     require("fs").readdirSync(normalizedPath).forEach(function(file) {
         try {
             require("../../skills/" + file)(controller, bot);
-            console.log("loaded skill: " + file);
         } catch (err) {
             if (err.code == "MODULE_NOT_FOUND") {
                 if (file != "utils") {

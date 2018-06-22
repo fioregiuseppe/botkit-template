@@ -4,8 +4,7 @@
 module.exports = function(controller) {
 
     controller.hears([/^help$/], 'direct_message,direct_mention', function(bot, message) {
-        console.log(bot);
-        console.log('BOTTYPE:' + controller.botType);
+        console.log('BOTTYPE:' + bot.type);
         var text = "Here are my skills:";
         text += "\n- " + bot.appendMention(message, "color") + ": ask to pick a random color";
         text += "\n- " + bot.appendMention(message, "loop") + ": example of a menu that loops until explicitly stopped";
