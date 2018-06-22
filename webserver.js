@@ -12,8 +12,6 @@ module.exports = function(controller, bot) {
     webserver.use(session({ secret: 'itlBot', cookie: { maxAge: 60000 } }));
     webserver.use(bodyParser.json());
     webserver.use(bodyParser.urlencoded({ extended: true }));
-
-    webserver.use(express.static('public'));
     webserver.use(function(req, res, next) {
         console.log(req);
         next();
