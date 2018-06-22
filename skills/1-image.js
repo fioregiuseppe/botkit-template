@@ -59,15 +59,15 @@ module.exports = function(controller) {
                 streamResult.stream // => Stream object
                 streamResult.length // => Integer length of stream
                     // write to a file
-                bot.reply(message, {
-                    text: 'Chart Image',
-                    files: [chartNode.getImageStream('image/png')]
-                });
-                //return chartNode.writeImageToFile('image/png', './testimage.png');
+                return chartNode.writeImageToFile('image/png', './testimage.png');
             })
             .then(() => {
                 // chart is now written to the file path
                 // ./testimage.png
+                bot.reply(message, {
+                    text: 'Chart Image',
+                    files: [fs.createReadStream('./testimage.png')]
+                });
             });
 
     });
