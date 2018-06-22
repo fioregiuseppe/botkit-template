@@ -65,10 +65,17 @@ module.exports = function(controller) {
             .then(() => {
                 // chart is now written to the file path
                 // ./testimage.png
-                bot.reply(message, {
-                    text: 'Chart Image',
-                    files: [fs.createReadStream(__basedir + '/public/images/testimage.png')]
-                });
+                if (bot.type === 'ciscospark') {
+                    bot.reply(message, {
+                        text: 'Chart Image',
+                        files: [fs.createReadStream(__basedir + '/public/images/testimage.png')]
+                    });
+                } else if (bot.type === 'slack') {
+                    bot.reply(message, {
+                        text: 'Chart Image',
+                        attachments: [{ title: 'mio', image_url: 'https://itlbot.herokuapp.com/images/testimage.png' }]
+                    });
+                }
             });
 
     });
