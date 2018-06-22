@@ -1,4 +1,5 @@
 const ChartjsNode = require('chartjs-node');
+var fs = require('fs');
 
 module.exports = function(controller) {
 
