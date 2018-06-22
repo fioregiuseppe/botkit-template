@@ -16,6 +16,8 @@ module.exports = function(slackToken) {
     var env = process.env.NODE_ENV || "development";
     var controller = Botkit.slackbot({
         debug: false,
+        require_delivery: true,
+        send_via_rtm: true
     });
     controller.slackToken = slackToken;
     return controller;
