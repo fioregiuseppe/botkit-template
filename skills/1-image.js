@@ -68,12 +68,18 @@ module.exports = function(controller) {
                 if (bot.type === 'ciscospark') {
                     bot.reply(message, {
                         text: 'Chart Image',
-                        files: [fs.createReadStream(__basedir + '/public/images/testimage.png')]
+                        files: ['https://itlbot.herokuapp.com/images/testimage.png']
+                            //files: [fs.createReadStream(__basedir + '/public/images/testimage.png')]
                     });
                 } else if (bot.type === 'slack') {
                     bot.reply(message, {
                         text: 'Chart Image',
-                        attachments: [{ title: 'mio', image_url: 'https://itlbot.herokuapp.com/images/testimage.png' }]
+                        attachments: [{
+                            title: 'Chart',
+                            //title_link: "https://<domain>/....",
+                            //color: '#ffffff',
+                            image_url: 'https://itlbot.herokuapp.com/images/testimage.png'
+                        }]
                     });
                 }
             });
